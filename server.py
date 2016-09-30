@@ -1,6 +1,6 @@
 from socket import *
 from threading import *
-import ntpath, os, sys, argparse
+import ntpath, os, os.path, sys, argparse
 
 class Server:
     def __init__(self, host, port):
@@ -33,13 +33,17 @@ class Server:
                 data = (client.recv(self.size)).split()
 
                 fileLoc = os.path.join(self.directory, data[1])
-                tailName = ntpath.basename(fileLoc)
-                fullPath = os.path.abspath(fileLoc)
 
                 if data:
                     if (data[0].upper() == "GET"):
+                        if not (os.path.exists(fileLoc)):
+                            self.print_error_message('file not found')
+                            client.send('invalid')
+
+                        tailName = ntpath.basename(fileLoc)
+                        fullPath = os.path.abspath(fileLoc)
                         fileSize = os.path.getsize(fileLoc)
-                        self.print_info_message('Retrieving file: ' + tailName)
+                        self.print_info_message('Requested file: ' + tailName)
 
                         client.send(tailName + " " + str(fileSize))
                         theFile = open(fullPath, 'rb')
@@ -55,6 +59,10 @@ class Server:
                     elif (data[0].upper() == "SEND"):
                         self.print_info_message('Saving to ' + str(data[1]))
                         self.print_info_message('File size: ' + str(data[2]) + ' bytes')
+
+                        tailName = ntpath.basename(fileLoc)
+                        fullPath = os.path.abspath(fileLoc)
+                        fileSize = os.path.getsize(fileLoc)
 
                         # Make sure file folder exists
                         if not os.path.exists(self.directory):

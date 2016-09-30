@@ -1,4 +1,4 @@
-import sys
+import sys, argparse
 from PyQt4 import QtGui
 from PyQt4.QtGui import QDialog
 from PyQt4.QtGui import QPushButton
@@ -29,5 +29,22 @@ def show_dialog():
     error_dialog.setGeometry(100, 100, DIALOG_WIDTH, DIALOG_HEIGHT)
     error_dialog.exec_()
 
-if __name__ == '__main__':
+def parseCmdArguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--ip', help='host ip to bind to', default='localhost')
+    parser.add_argument('--port', help='port number to listen on', default=7005, type=int)
+    args = parser.parse_args()
+    return args
+
+if __name__ == "__main__":
+    # Parse Input Arguments
+    args = parseCmdArguments()
+
     window()
+
+    try:
+        client = Client(args.ip, args.port)
+        client.start()
+    except KeyboardInterrupt:
+        print('\nClosing... Have a nice day :)')
+        sys.exit()

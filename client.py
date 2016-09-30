@@ -37,6 +37,10 @@ class Client:
                 self.sockObj.send(command + " " + fileName)
                 data = self.sockObj.recv(self.size).split()
 
+                if (len(data) == 1):
+                    print 'File not found on server'
+                    continue
+
                 theFile = open(fullPath, 'wb')
                 fileSize = data[1]
                 l = self.sockObj.recv(self.size)
