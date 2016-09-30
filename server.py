@@ -1,15 +1,14 @@
 from socket import *
 from threading import *
-import ntpath
-import os
-import sys
+import ntpath, os, sys, argparse
 
 class Server:
-    def __init__(self):
+    def __init__(self, host, port):
         # Initialize Variables and Socket
-        self.listenHost = ''
-        self.listenPort = 7005
+        self.listenHost = host
+        self.listenPort = port
         self.size = 1024
+        self.directory = 'server'
         self.sockObj = socket(AF_INET, SOCK_STREAM)
         self.sockObj.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 
@@ -28,18 +27,19 @@ class Server:
             Thread(target = self.listenToClient, args = (client, address)).start()
 
     def listenToClient(self, client, address):
-        default_file_location = 'server'
 
         while True:
             try:
                 data = (client.recv(self.size)).split()
 
+                fileLoc = os.path.join(self.directory, data[1])
+                tailName = ntpath.basename(fileLoc)
+                fullPath = os.path.abspath(fileLoc)
+
                 if data:
-                    if (data[0] == "GET"):
-                        tailName = ntpath.basename(data[1])
-                        fullPath = os.path.abspath(data[1])
-                        fileSize = os.path.getsize(data[1])
-                        print tailName
+                    if (data[0].upper() == "GET"):
+                        fileSize = os.path.getsize(fileLoc)
+                        self.print_info_message('Retrieving file: ' + tailName)
 
                         client.send(tailName + " " + str(fileSize))
                         theFile = open(fullPath, 'rb')
@@ -51,16 +51,20 @@ class Server:
                         theFile.close()
                         self.print_info_message('Done Sending')
 
-                    if (data[0] == "SEND"):
+
+                    elif (data[0].upper() == "SEND"):
                         self.print_info_message('Saving to ' + str(data[1]))
                         self.print_info_message('File size: ' + str(data[2]) + ' bytes')
 
-                        theFile = open(data[1], 'wb')
+                        # Make sure file folder exists
+                        if not os.path.exists(self.directory):
+                            os.makedirs(self.directory)
+
+                        theFile = open(fullPath, 'wb')
                         fileSize = data[2]
                         l = client.recv(self.size)
                         receivedSize = len(l)       # keep track of transferred bytes
                         while (l):
-                            self.print_info_message("Receiving... " + str(receivedSize))
                             theFile.write(l)
 
                             if (str(receivedSize) != fileSize): # know when to stop receiving data
@@ -83,9 +87,19 @@ class Server:
     def print_info_message(self, text):
         print('INFO: ' + text)
 
+def parseCmdArguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--ip', help='host ip to bind to', default='')
+    parser.add_argument('--port', help='port number to listen on', default=7005, type=int)
+    args = parser.parse_args()
+    return args
+
 if __name__ == "__main__":
+    # Parse Input Arguments
+    args = parseCmdArguments()
+
     try:
-        server = Server()
+        server = Server(args.ip, args.port)
     except KeyboardInterrupt:
         print('\nClosing... Have a nice day :)')
         sys.exit()
