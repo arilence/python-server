@@ -9,6 +9,15 @@ class ErrorDialog(QDialog):
         QtGui.QDialog.__init__(self,parent)
         self.errorText = errorText
         self.setupUi()
+        self.centerPosition()
+
+    def centerPosition(self):
+        frameGm = self.frameGeometry()
+        screen = QtGui.QApplication.desktop().screenNumber(QtGui.QApplication.desktop().cursor().pos())
+        centerPoint = QtGui.QApplication.desktop().screenGeometry(screen).center()
+        frameGm.moveCenter(centerPoint)
+        self.move(frameGm.topLeft())
+        self.show()
 
     def setupUi(self):
         self.setWindowTitle("Uh Oh! ERROR!")

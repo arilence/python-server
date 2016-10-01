@@ -1,4 +1,5 @@
 import sys, argparse
+from socket import gethostbyname, gaierror
 from PyQt4 import QtGui
 from PyQt4.QtGui import *
 from include.gui.ConnectionDialog import ConnectionDialog
@@ -9,12 +10,17 @@ from include.net.Client import Client
 from include.net.Server import Server
 
 class ClientApplication:
-    def __init__(self, client):
+    def __init__(self, remoteHost, remotePort):
         self.app = QtGui.QApplication(sys.argv)
-        connectionDialog = ConnectionDialog()
+        connectionDialog = ConnectionDialog(remoteHost, remotePort)
         if (connectionDialog.exec_()):
-            window = MainWindow(client)
-            window.show()
+            try:
+                client = Client(str(connectionDialog.remoteHost), remotePort)
+                window = MainWindow(client)
+                window.show()
+            except gaierror:
+                ErrorDialog("Cannot connect to host").exec_()
+                raise
         else:
             sys.exit()
 
@@ -81,5 +87,4 @@ if __name__ == "__main__":
             print('\nClosing... Have a nice day :)')
             sys.exit()
     else:
-        client = Client(args.ip, args.port)
-        ClientApplication(client)
+        ClientApplication(args.ip, args.port)

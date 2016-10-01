@@ -5,8 +5,10 @@ class ConnectionDialog(QDialog):
     DIALOG_HEIGHT = 100
     DIALOG_WIDTH = 450
 
-    def __init__(self,parent=None):
+    def __init__(self, remoteHost, remotePort, parent=None):
         QtGui.QDialog.__init__(self,parent)
+        self.remoteHost = remoteHost
+        self.remotePort = remotePort
         self.setupUi()
         self.centerPosition()
 
@@ -26,6 +28,7 @@ class ConnectionDialog(QDialog):
         hostLabel.setText("Enter a host to connect to")
 
         self.hostText = QLineEdit(self)
+        self.hostText.setText(self.remoteHost)
         self.hostText.move(10,40)
 
         connectBTN = QPushButton(self)
@@ -48,5 +51,6 @@ class ConnectionDialog(QDialog):
         self.setLayout(vbox)
 
     def acceptConnect(self):
+        self.remoteHost = self.hostText.text()
         self.accept()
 
