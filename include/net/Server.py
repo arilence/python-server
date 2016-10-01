@@ -39,6 +39,7 @@ class Server:
                         if not (os.path.exists(fileLoc)):
                             self.print_error_message('file not found')
                             client.send('invalid')
+                            continue
 
                         tailName = ntpath.basename(fileLoc)
                         fullPath = os.path.abspath(fileLoc)

@@ -6,6 +6,7 @@ from include.gui.ConnectionDialog import ConnectionDialog
 from include.gui.GetDialog import GetDialog
 from include.gui.SendDialog import SendDialog
 from include.gui.ErrorDialog import ErrorDialog
+from include.gui.MessageDialog import MessageDialog
 from include.net.Client import Client
 from include.net.Server import Server
 
@@ -61,12 +62,18 @@ class MainWindow(QWidget):
             if (len(fileName) <= 0) or (len(fileName) > 256):
                 ErrorDialog("File name must be between 3 and 256 characters").exec_()
             else:
-                client.get(str(getDialog.fileName))
+                if (self.client.get(str(getDialog.fileName))):
+                    MessageDialog("File was downloaded successfully").exec_()
+                else:
+                    ErrorDialog("File was not found on the server").exec_()
 
     def send_dialog(self):
         sendDialog = SendDialog()
         if (sendDialog.exec_()):
-            client.send(str(sendDialog.fileLocation))
+            if (self.client.send(str(sendDialog.fileLocation))):
+                MessageDialog("File was uploaded successfully").exec_()
+            else:
+                ErrorDialog("Hmm... there was a problem uploading the file").exec_()
 
 def parseCmdArguments():
     parser = argparse.ArgumentParser()

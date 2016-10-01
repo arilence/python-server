@@ -19,16 +19,17 @@ class Client:
             os.makedirs(self.directory)
 
         fileLoc = os.path.join(self.directory, fileName)
-        print fileLoc
         tailName = ntpath.basename(fileLoc)
         fullPath = os.path.abspath(fileLoc)
 
         self.sockObj.send("GET " + fileName)
         data = self.sockObj.recv(self.size).split()
 
-        if (len(data) == 1):
+        print data
+
+        if (len(data) == 1) or (len(data) > 2):
             print 'File not found on server'
-            return
+            return False
 
         theFile = open(fullPath, 'wb')
         fileSize = data[1]
@@ -45,13 +46,13 @@ class Client:
                 break
         theFile.close()
         print 'Done Receiving'
+        return True
 
     def send(self, fileLocation):
         tailName = ntpath.basename(fileLocation)
         fileSize = os.path.getsize(fileLocation)
 
         self.sockObj.send("SEND " + tailName + " " + str(fileSize))
-        print fileSize
         theFile = open(fileLocation, 'rb')
         l = theFile.read(self.size)
         while (l):
@@ -64,3 +65,4 @@ class Client:
         # Receive Server Response
         data = self.sockObj.recv(self.size)
         print data
+        return True
