@@ -62,7 +62,6 @@ class Server:
 
                         tailName = ntpath.basename(fileLoc)
                         fullPath = os.path.abspath(fileLoc)
-                        fileSize = os.path.getsize(fileLoc)
 
                         # Make sure file folder exists
                         if not os.path.exists(self.directory):
@@ -94,20 +93,3 @@ class Server:
 
     def print_info_message(self, text):
         print('INFO: ' + text)
-
-def parseCmdArguments():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--ip', help='host ip to bind to', default='')
-    parser.add_argument('--port', help='port number to listen on', default=7005, type=int)
-    args = parser.parse_args()
-    return args
-
-if __name__ == "__main__":
-    # Parse Input Arguments
-    args = parseCmdArguments()
-
-    try:
-        server = Server(args.ip, args.port)
-    except KeyboardInterrupt:
-        print('\nClosing... Have a nice day :)')
-        sys.exit()
