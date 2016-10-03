@@ -25,11 +25,10 @@ class ConnectionDialog(QDialog):
         self.setGeometry(100, 100, ConnectionDialog.DIALOG_WIDTH, ConnectionDialog.DIALOG_HEIGHT)
 
         hostLabel = QLabel(self)
-        hostLabel.setText("Enter a host to connect to")
+        hostLabel.setText("Enter Host Address")
 
         self.hostText = QLineEdit(self)
         self.hostText.setText(self.remoteHost)
-        self.hostText.move(10,40)
 
         connectBTN = QPushButton(self)
         connectBTN.setText("Connect")
@@ -44,7 +43,7 @@ class ConnectionDialog(QDialog):
         hbox2.addWidget(connectBTN)
 
         vbox = QVBoxLayout()
-        vbox.addStretch(1)
+        vbox.addWidget(hostLabel)
         vbox.addLayout(hbox)
         vbox.addLayout(hbox2)
 

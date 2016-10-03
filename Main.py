@@ -40,13 +40,19 @@ class MainWindow(QWidget):
 
         b = QPushButton(self)
         b.setText("GET")
-        b.move(50, 20)
+        b.setFixedHeight(50)
         b.clicked.connect(self.get_dialog)
 
         b2 = QPushButton(self)
         b2.setText("SEND")
-        b2.move(50, 40)
+        b2.setFixedHeight(50)
         b2.clicked.connect(self.send_dialog)
+
+        grid = QtGui.QGridLayout()
+        grid.setSpacing(10)
+        grid.addWidget(b)
+        grid.addWidget(b2)
+        self.setLayout(grid)
 
     def center(self):
         frameGm = self.frameGeometry()
@@ -70,10 +76,14 @@ class MainWindow(QWidget):
     def send_dialog(self):
         sendDialog = SendDialog()
         if (sendDialog.exec_()):
-            if (self.client.send(str(sendDialog.fileLocation))):
-                MessageDialog("File was uploaded successfully").exec_()
+            fileLocation = str(sendDialog.fileLocation)
+            if (len(fileLocation) <= 0):
+                ErrorDialog("File location cannot be empty").exec_()
             else:
-                ErrorDialog("Hmm... there was a problem uploading the file").exec_()
+                if (self.client.send(str(sendDialog.fileLocation))):
+                    MessageDialog("File was uploaded successfully").exec_()
+                else:
+                    ErrorDialog("Hmm... there was a problem uploading the file").exec_()
 
 def parseCmdArguments():
     parser = argparse.ArgumentParser()
