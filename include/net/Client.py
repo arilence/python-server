@@ -22,7 +22,7 @@ class Client:
         tailName = ntpath.basename(fileLoc)
         fullPath = os.path.abspath(fileLoc)
 
-        self.sockObj.send("GET " + fileName)
+        self.sockObj.send("GET," + fileName)
         data = self.sockObj.recv(self.size).split(',')
 
         print data

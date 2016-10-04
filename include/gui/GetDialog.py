@@ -50,5 +50,6 @@ class GetDialog(QDialog):
         self.accept()
 
     def cancelInput(self):
+        self.fileName = ""
         self.close()
 
