@@ -30,7 +30,7 @@ class Server:
 
         while True:
             try:
-                data = (client.recv(self.size)).split()
+                data = (client.recv(self.size)).split(',')
 
                 fileLoc = os.path.join(self.directory, data[1])
 
@@ -46,7 +46,7 @@ class Server:
                         fileSize = os.path.getsize(fileLoc)
                         self.print_info_message('Requested file: ' + tailName)
 
-                        client.send(tailName + " " + str(fileSize))
+                        client.send(tailName + "," + str(fileSize))
                         theFile = open(fullPath, 'rb')
                         l = theFile.read(self.size)
                         while(l):

@@ -23,7 +23,7 @@ class Client:
         fullPath = os.path.abspath(fileLoc)
 
         self.sockObj.send("GET " + fileName)
-        data = self.sockObj.recv(self.size).split()
+        data = self.sockObj.recv(self.size).split(',')
 
         print data
 
@@ -52,7 +52,7 @@ class Client:
         tailName = ntpath.basename(fileLocation)
         fileSize = os.path.getsize(fileLocation)
 
-        self.sockObj.send("SEND " + tailName + " " + str(fileSize))
+        self.sockObj.send("SEND," + tailName + "," + str(fileSize))
         theFile = open(fileLocation, 'rb')
         l = theFile.read(self.size)
         while (l):
