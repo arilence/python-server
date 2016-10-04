@@ -25,17 +25,21 @@ class ConnectionDialog(QDialog):
         self.setGeometry(100, 100, ConnectionDialog.DIALOG_WIDTH, ConnectionDialog.DIALOG_HEIGHT)
 
         hostLabel = QLabel(self)
-        hostLabel.setText("Enter Host Address")
+        hostLabel.setText("Enter Host Address / Port")
 
         self.hostText = QLineEdit(self)
         self.hostText.setText(self.remoteHost)
+
+        self.portText = QLineEdit(self)
+        self.portText.setText(str(self.remotePort))
 
         connectBTN = QPushButton(self)
         connectBTN.setText("Connect")
         connectBTN.clicked.connect(self.acceptConnect)
 
         hbox = QtGui.QHBoxLayout()
-        hbox.addWidget(self.hostText)
+        hbox.addWidget(self.hostText, 2)
+        hbox.addWidget(self.portText, 1)
 
         hbox2 = QtGui.QHBoxLayout()
         hbox2.addStretch(1)
@@ -51,5 +55,6 @@ class ConnectionDialog(QDialog):
 
     def acceptConnect(self):
         self.remoteHost = self.hostText.text()
+        self.remotePort = self.portText.text()
         self.accept()
 

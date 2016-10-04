@@ -1,4 +1,4 @@
-import sys, argparse
+import sys, argparse, socket
 from socket import gethostbyname, gaierror
 from PyQt4 import QtGui
 from PyQt4.QtGui import *
@@ -16,10 +16,10 @@ class ClientApplication:
         connectionDialog = ConnectionDialog(remoteHost, remotePort)
         if (connectionDialog.exec_()):
             try:
-                client = Client(str(connectionDialog.remoteHost), remotePort)
+                client = Client(str(connectionDialog.remoteHost), int(connectionDialog.remotePort))
                 window = MainWindow(client)
                 window.show()
-            except gaierror:
+            except socket.error, gaierror:
                 ErrorDialog("Cannot connect to host").exec_()
                 return
         else:
