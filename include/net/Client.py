@@ -35,8 +35,9 @@ class Client:
         fileSize = data[1]
         l = self.sockObj.recv(self.size)
         receivedSize = len(l)
+        print 'Receiving...'
         while (l):
-            print 'Receiving... ' + str(receivedSize)
+            #print 'Receiving... ' + str(receivedSize)
             theFile.write(l)
 
             if (str(receivedSize) != fileSize):
@@ -50,19 +51,26 @@ class Client:
 
     def send(self, fileLocation):
         tailName = ntpath.basename(fileLocation)
-        fileSize = os.path.getsize(fileLocation)
+        #fileSize = os.path.getsize(fileLocation)
+        fileSize = os.stat(fileLocation).st_size
+        print fileSize
 
         self.sockObj.send("SEND," + tailName + "," + str(fileSize))
         theFile = open(fileLocation, 'rb')
         l = theFile.read(self.size)
-        while (l):
+        # wait for response before sending
+        response = self.sockObj.recv(self.size)
+        if (response == "OKAY"):
             print 'Sending...'
-            self.sockObj.send(l)
-            l = theFile.read(self.size)
-        theFile.close()
-        print 'Done Sending...'
+            while (l):
+                self.sockObj.send(l)
+                l = theFile.read(self.size)
+            theFile.close()
+            print 'Done Sending...'
 
-        # Receive Server Response
-        data = self.sockObj.recv(self.size)
-        print data
-        return True
+            # Receive Server Response
+            data = self.sockObj.recv(self.size)
+            print data
+            return True
+        else:
+            return False

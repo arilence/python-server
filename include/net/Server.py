@@ -68,6 +68,9 @@ class Server:
                         if not os.path.exists(self.directory):
                             os.makedirs(self.directory)
 
+                        # Send response that file is received
+                        client.send("OKAY")
+
                         theFile = open(fullPath, 'wb')
                         fileSize = data[2]
                         l = client.recv(self.size)
