@@ -21,7 +21,7 @@ class ClientApplication:
                 window.show()
             except gaierror:
                 ErrorDialog("Cannot connect to host").exec_()
-                raise
+                return
         else:
             sys.exit()
 
@@ -87,7 +87,7 @@ class MainWindow(QWidget):
 
 def parseCmdArguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--ip', help='host ip to bind to', default='localhost')
+    parser.add_argument('--ip', help='host ip to bind to', default='')
     parser.add_argument('--port', help='port number to listen on', default=7005, type=int)
     parser.add_argument('--server', help='starts up in server mode', action='store_true')
     args = parser.parse_args()
