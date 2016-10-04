@@ -1,3 +1,23 @@
+"""---------------------------------------------------------------------------------------
+--      SOURCE FILE:        Server.py - Server side connection methods
+--
+--      PROGRAM:            file_transport
+--
+--      DATE:               October 2, 2016
+--
+--      REVISION:           (Date and Description)
+--
+--      DESIGNERS:          Anthony Smith
+--
+--      PROGRAMMERS:        Anthony Smith
+--
+--      NOTES:
+--      This file creates a TCP server with a specified port number. After binding to a
+--      socket, the class waits for an incoming connection. Once a connection has been
+--      been made, they are split off onto seperate threads for better performance.
+--      Within each thread, the program waits for incoming commands (GET / SEND).
+--      Depending on the command, the server will either read from or write to a file.
+---------------------------------------------------------------------------------------"""
 from socket import *
 from threading import *
 import ntpath, os, os.path, sys, argparse

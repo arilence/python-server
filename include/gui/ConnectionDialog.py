@@ -1,3 +1,22 @@
+"""---------------------------------------------------------------------------------------
+--      SOURCE FILE:        ConnectionDialog.py - Simple dialog input box with host and ip
+--
+--      PROGRAM:            file_transport
+--
+--      DATE:               October 2, 2016
+--
+--      REVISION:           (Date and Description)
+--
+--      DESIGNERS:          Anthony Smith
+--
+--      PROGRAMMERS:        Anthony Smith
+--
+--      NOTES:
+--      This file extends the PYQT dialog class to build a dialog box with two input
+--      boxes and a connection button. One input box is to specify the host address, and
+--      the other is to specify the port to connect to. Once the dialog is submitted, it
+--      sets the values of both text boxes to be later retrieved
+---------------------------------------------------------------------------------------"""
 from PyQt4 import QtGui
 from PyQt4.QtGui import *
 

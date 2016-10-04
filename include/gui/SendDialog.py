@@ -1,3 +1,24 @@
+"""---------------------------------------------------------------------------------------
+--      SOURCE FILE:        SendDialog.py - Simple dialog box to specify files
+--
+--      PROGRAM:            file_transport
+--
+--      DATE:               October 2, 2016
+--
+--      REVISION:           (Date and Description)
+--
+--      DESIGNERS:          Anthony Smith
+--
+--      PROGRAMMERS:        Anthony Smith
+--
+--      NOTES:
+--      This file extends the PYQT dialog class to build a dialog box with a text field,
+--      file browser button, submit button, and cancel button. The file browser button
+--      displays the system file browser and allows the user to select a file. Once a
+--      file has been selected, the destination is populated in the text field. When a
+--      user presses the submit button, the values are saved and can be retrieved later.
+--      If the user presses the cancel button, no values are saved and progress is reset.
+---------------------------------------------------------------------------------------"""
 from PyQt4 import QtGui
 from PyQt4.QtGui import *
 

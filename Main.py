@@ -1,3 +1,22 @@
+"""---------------------------------------------------------------------------------------
+--      SOURCE FILE:        Main.py - Entry point for a simple file transfer application
+--
+--      PROGRAM:            file_transport
+--
+--      DATE:               October 2, 2016
+--
+--      REVISION:           (Date and Description)
+--
+--      DESIGNERS:          Anthony Smith
+--
+--      PROGRAMMERS:        Anthony Smith
+--
+--      NOTES:
+--      This program is the main entry point for a simple file transferring application.
+--      It will run as a client or server using a TCP connection to transfer files.
+--      Running the application with no arguments will default it to client mode.
+--      Specifying a flag --server will start the application in server mode.
+---------------------------------------------------------------------------------------"""
 import sys, argparse, socket
 from socket import gethostbyname, gaierror
 from PyQt4 import QtGui

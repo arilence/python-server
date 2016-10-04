@@ -1,3 +1,22 @@
+"""---------------------------------------------------------------------------------------
+--      SOURCE FILE:        ErrorDialog.py - Simple dialog box to show error messages
+--
+--      PROGRAM:            file_transport
+--
+--      DATE:               October 2, 2016
+--
+--      REVISION:           (Date and Description)
+--
+--      DESIGNERS:          Anthony Smith
+--
+--      PROGRAMMERS:        Anthony Smith
+--
+--      NOTES:
+--      This file extends the PYQT dialog class to build a dialog box with a text label
+--      and button. The label is set to the value passed in during construction. The
+--      value is meant to be an error message that is displayed to the user. Once the
+--      user reads the message, clicking the button will dismiss the error message.
+---------------------------------------------------------------------------------------"""
 from PyQt4 import QtGui
 from PyQt4.QtGui import *
 

@@ -1,3 +1,22 @@
+"""---------------------------------------------------------------------------------------
+--      SOURCE FILE:        MessageDialog.py - Simple dialog box to show info messages
+--
+--      PROGRAM:            file_transport
+--
+--      DATE:               October 2, 2016
+--
+--      REVISION:           (Date and Description)
+--
+--      DESIGNERS:          Anthony Smith
+--
+--      PROGRAMMERS:        Anthony Smith
+--
+--      NOTES:
+--      This file extends the PYQT dialog class to build a dialog box with a text label
+--      and dismiss button. The text label is filled with the value set during
+--      construction. The value is to be shown as an information message apposed to a
+--      error message. Once the user presses the dismiss button, the dialog box closes.
+---------------------------------------------------------------------------------------"""
 from PyQt4 import QtGui
 from PyQt4.QtGui import *
 

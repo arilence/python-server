@@ -1,3 +1,22 @@
+"""---------------------------------------------------------------------------------------
+--      SOURCE FILE:        GetDialog.py - Simple dialog box to specify files
+--
+--      PROGRAM:            file_transport
+--
+--      DATE:               October 2, 2016
+--
+--      REVISION:           (Date and Description)
+--
+--      DESIGNERS:          Anthony Smith
+--
+--      PROGRAMMERS:        Anthony Smith
+--
+--      NOTES:
+--      This file extends the PYQT dialog class to build a dialog box with a input box
+--      and a submit button. The input box allows the user to enter text pertaining to
+--      the file they want to download off the server. Once the submit button is
+--      pressed, the value is then saved and can be retrieved when need be.
+---------------------------------------------------------------------------------------"""
 from PyQt4 import QtGui
 from PyQt4.QtGui import *
 

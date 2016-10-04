@@ -1,3 +1,22 @@
+"""---------------------------------------------------------------------------------------
+--      SOURCE FILE:        Client.py - Client side connection methods
+--
+--      PROGRAM:            file_transport
+--
+--      DATE:               October 2, 2016
+--
+--      REVISION:           (Date and Description)
+--
+--      DESIGNERS:          Anthony Smith
+--
+--      PROGRAMMERS:        Anthony Smith
+--
+--      NOTES:
+--      This file establishes a connection with a TCP server specified by the user. After
+--      connected, the class will accept GET or SEND commands via methods. GET and SEND
+--      require the filename to be passed. From there, the class will determine file sizes
+--      and absolute locations to properly send or receive a file.
+---------------------------------------------------------------------------------------"""
 from socket import *
 import ntpath, os, sys
 
